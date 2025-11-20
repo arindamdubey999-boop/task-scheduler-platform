@@ -5,6 +5,7 @@ import com.taskscheduler.model.Task;
 import com.taskscheduler.service.TaskService;
 import com.taskscheduler.service.ApiGatewayService;
 import com.taskscheduler.service.WorkflowOrchestrationService;
+import io.opentelemetry.api.trace.Span;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,11 @@ public class TaskController {
 
     @GetMapping("/health")
     public ResponseEntity<String> getHello() {
-
+        // Get current trace information
+        Span currentSpan = Span.current();
+        String traceId = currentSpan.getSpanContext().getTraceId();
+        
+        log.info("Health check called - TraceID: {}", traceId);
         return ResponseEntity.ok("Allah hu habibi!!! bismilaah nizamudiin sarkar maksqad qubool ho!");
     }
 
