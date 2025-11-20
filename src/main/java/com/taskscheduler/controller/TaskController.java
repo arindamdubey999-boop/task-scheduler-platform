@@ -24,7 +24,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<Task> createTask(@Valid @RequestBody CreateTaskRequest request) {
-        log.info("Received task creation request: {}", request.getName());
+        log.info("Received task creation request: {}", request.getId());
         
         Task task = taskService.createTask(request);
         
@@ -64,7 +64,7 @@ public class TaskController {
                 now.getMinute(),
                 now.getSecond(),
                 millis);
-
-        return ResponseEntity.ok(String.format("Timestamp String: %s\nThis will be stored directly in Cassandra!", timestampId));
+        
+        return ResponseEntity.ok(String.format("Timestamp String: %s%nThis will be stored directly in Cassandra!", timestampId));
     }
 }
